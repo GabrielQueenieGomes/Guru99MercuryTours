@@ -21,45 +21,40 @@ public class RegistrationCountry {
 		driver.get("https://demo.guru99.com/test/newtours/");
 		Thread.sleep(1500);
 		
-List<WebElement> closeButton = driver.findElements(By.className("cb-close"));
-        
+		List<WebElement> closeButton = driver.findElements(By.xpath("//div[contains(@class, 'cb-close')]"));
+
         if (closeButton.size() > 0) {
-            System.out.println("Popup detected. Closing it...");
+            System.out.println("Popup found. Closing...");
             closeButton.get(0).click();
-        } else {
-            System.out.println("No popup detected. Proceeding...");
         }
 		
-        driver.findElement(By.linkText("REGISTER")).click();
+driver.findElement(By.xpath("//a[contains(text(), 'REGISTER')]")).click();
+        
         Thread.sleep(2000);
         
-        WebElement countryDropdown = driver.findElement(By.name("country"));
+WebElement countryDropdown = driver.findElement(By.xpath("//select[contains(@name, 'country')]"));
+        
         Select select = new Select(countryDropdown);
         
-        System.out.println("Selecting BANGLADESH by Visible Text");
         select.selectByVisibleText("BANGLADESH");
-        Thread.sleep(1500);
+        Thread.sleep(1000);
         
-        System.out.println("Selecting Index 12 (ANTARCTICA)");
         select.selectByIndex(12);
-        Thread.sleep(1500);
-		
-        System.out.println("Selecting CHINA by Value");
+        Thread.sleep(1000);
+        
         select.selectByValue("CHINA");
-        Thread.sleep(1500);
+        Thread.sleep(1000);
 		
         List<WebElement> dropDownOptions = select.getOptions();
         int optionsCount = dropDownOptions.size();
-        System.out.println("Total Countries found: " + optionsCount);
 		
 		for (int i = 0; i < optionsCount; i++) {
-			String value = select.getOptions().get(i).getText();
-			System.out.println(value);
+			String value = dropDownOptions.get(i).getText();
 		
 			if (value.equals("UNITED STATES")) {
-                System.out.println("Found UNITED STATES at index " + i + ". Selecting it now.");
                 select.selectByIndex(i);
-                break; // Exit loop once found
+                System.out.println("Selected: " + value);
+                break;
             }
 		}
 
